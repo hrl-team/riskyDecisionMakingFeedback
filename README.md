@@ -1,4 +1,5 @@
-This repository aims to make publically available the data of Nasioulas et al. 2024. 
+This repository aims to make publically available the data of Nasioulas et al. 2024 (currently under revision).
+
 The data are included in the .csv file (Nasioulas2024_data.csv) and the related .txt file (Nasioulas2024_data_readMe.txt) provides information about the columns of the data matrix. 
 
 A simple Matlab script (Nasioulas2024_basicFigures.m) is provided to facilitate the reader to reproduce the basic plots of our manuscript. 
