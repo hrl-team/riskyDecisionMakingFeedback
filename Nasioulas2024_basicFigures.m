@@ -52,13 +52,17 @@ ylim([0 1]);
 box on
 % ---
 
+factors = "FEEDBACK"; 
+figName = sprintf('Figure1_%s__%s.jpg', dependentS, factors);
+exportgraphics(gcf, figName, 'Resolution', 300);
+
 
 %% xxxxxxxxxx  Figure 2: Dependent(feedback,factor2) boxplot  xxxxxxxxxxxxx
 
 % --- modifiable parameters
 experiment = [3,4,6]; %numeric array including any of the values 1,2,...,7
-dependent = 2; %1: Risky-rate, 2: Optimal-rate
-factor2 = 1; %1:risky/sureBetter, 2: pRisky
+dependent = 1; %1: Risky-rate, 2: Optimal-rate
+factor2 = 2; %1:risky/sureBetter, 2: pRisky
 % ---
 
 % --- compute summary data based on the input parameters
@@ -99,6 +103,10 @@ title(sprintf('Violin plot with connected data points of individuals\n%s\nmeans:
 ylim([0 1]);
 box on
 % ---
+
+factors = sprintf('FEEDBACK_%s', factor2S);
+figName = sprintf('Figure2_%s__%s.jpg', dependentS, factors);
+exportgraphics(gcf, figName, 'Resolution', 300);
 
 
 
@@ -160,3 +168,7 @@ ylim([0,1])
 expS = sprintf("Exp %s",strrep(num2str(experiment), '  ', ', '));
 title(sprintf('Line-plot\n%s', expS)) ;
 % ---
+
+factors = 'FEEDBACK_TRIAL';
+figName = sprintf('Figure3_%s__%s.jpg', depName, factors);
+exportgraphics(gcf, figName, 'Resolution', 300);
