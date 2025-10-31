@@ -29,10 +29,10 @@ These options are clearly commented within the code to facilitate easy modificat
 ## Example Figures
 
 <p align="center">
-  <img src="https://github.com/hrl-team/riskyDecisionMakingFeedback/blob/main/Figure1__example1.jpg?raw=true" alt="Example Figure 1" height="350">
-  <img src="https://github.com/anasioulas/riskyDecisionMakingFeedback/blob/main/Figure3__example1.jpg?raw=true" alt="Example Figure 3" height="350">
-  <img src="https://github.com/hrl-team/riskyDecisionMakingFeedback/blob/main/Figure2__example1.jpg?raw=true" alt="Example Figure 2A" height="350">
-  <img src="https://github.com/hrl-team/riskyDecisionMakingFeedback/blob/main/Figure2__example2.jpg?raw=true" alt="Example Figure 2B" height="350">
+  <img src="https://github.com/hrl-team/riskyDecisionMakingFeedback/blob/main/Figure1__example1.jpg?raw=true&v=2" alt="Example Figure 1" height="350">
+  <img src="https://github.com/anasioulas/riskyDecisionMakingFeedback/blob/main/Figure3__example1.jpg?raw=true&v=2" alt="Example Figure 3" height="350">
+  <img src="https://github.com/hrl-team/riskyDecisionMakingFeedback/blob/main/Figure2__example1.jpg?raw=true&v=2" alt="Example Figure 2A" height="350">
+  <img src="https://github.com/hrl-team/riskyDecisionMakingFeedback/blob/main/Figure2__example2.jpg?raw=true&v=2" alt="Example Figure 2B" height="350">
 </p>
 
 ---
