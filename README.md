@@ -41,7 +41,7 @@ These options are clearly commented within the code to facilitate easy modificat
 
 If you use these data or scripts, please cite:
 
-> Nasioulas A., *et al.* (2024). **[Feedback-induced attitudinal changes in risk preferences]**. *Nature Communications* (in press).  
+> Nasioulas A., *et al.* (2024). **Feedback-induced attitudinal changes in risk preferences**. *Nature Communications* (in press).  
 > DOI: *to be added when available*
 
 
