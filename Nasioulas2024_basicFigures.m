@@ -1,14 +1,12 @@
-% This is script is designed to reproduce basic figures of Nasioulas_2024,
-%   using basic functions of Matlab (hence, the visual result is more
-%   primitive, but the essence remains the same)
+% This is script is designed to reproduce basic figures of Nasioulas_2024.
 %
 % There are three basic categories/types of figures. 
 %
 % You can modify the "modifiable parameters" in order to change the
 % specifications of each plot. These parameters include which experiments
 % you want to take data from, the dependent variable you want to plot 
-% (Risky or Optimal choice) and in Figure the second factor to be included
-% in the analysis
+% (Risky or Optimal choice rate) and, in Figure 2, the second factor to be 
+% included in the analysis (risky/sureBetter or pRisky).
 %
 % Each figure category is coded within a section so that they can be run
 % autonomously, after having loaded the behavioral data ("behData") once
@@ -36,28 +34,29 @@ data = reshape(x.("mean_"+dependentS),[],2); %data(:,1)=no-feedback, data(:,2)=f
 
 % --- plot the data
 figure;
-boxplot(data, 'Colors', 'k', 'Widths', 0.5);
-hold on;
 
-% Plot individual data points
-for i = 1:size(data, 1)
-    plot([1, 2], data(i, :), 'Color', [0, 0, 0, 0.2]); % Connect data points with a line
-end
+% Define colors (blue for no-feedback, green for feedback)
+colors = [0.12 0.29 0.36;   % no-feedback
+          0.24 0.41 0.12];  % feedback
 
-hold off;
+% Plot violins with paired connections
+violinPlot(data, colors, true);
+
 set(gca, 'XTick', [1 2], 'XTickLabels', {'no-feedback', 'feedback'});
-ylabel(regexp(dependentS, '([^_]+)', 'match', 'once')+"-rate");
+ylabel(regexp(dependentS, '([^_]+)', 'match', 'once') + "-rate");
 
-expS = sprintf("Exp %s",strrep(num2str(experiment), '  ', ', '));
-meansS = ['[', strjoin(arrayfun(@(x) sprintf('%.2f', x),  mean(data), 'UniformOutput', false), ', '), ']'];
-title(sprintf('Boxplot with connected data points of individuals\n%s\nmeans: %s', expS, meansS)) ;
+expS = sprintf("Exp %s", strrep(num2str(experiment), '  ', ', '));
+meansS = ['[', strjoin(arrayfun(@(x) sprintf('%.2f', x), mean(data), 'UniformOutput', false), ', '), ']'];
+title(sprintf('Violin plot with connected data points of individuals\n%s\nmeans: %s', expS, meansS));
+ylim([0 1]);
+box on
 % ---
 
 
 %% xxxxxxxxxx  Figure 2: Dependent(feedback,factor2) boxplot  xxxxxxxxxxxxx
 
 % --- modifiable parameters
-experiment = [1,2,3,4,5,6]; %numeric array including any of the values 1,2,...,7
+experiment = [3,4,6]; %numeric array including any of the values 1,2,...,7
 dependent = 2; %1: Risky-rate, 2: Optimal-rate
 factor2 = 1; %1:risky/sureBetter, 2: pRisky
 % ---
@@ -78,26 +77,27 @@ data = reshape(x.("mean_"+dependentS),[],2*factor2N);
 
 % --- plot the data
 figure;
-boxplot(data, 'Colors', 'k', 'Widths', 0.5);
-hold on;
 
-% Plot individual data points
-for j = 1:factor2N
-    k = 2*j - 1;
-    for i = 1:size(data, 1)
-        plot([k, k+1], data(i, [k, k+1]), 'Color', [0, 0, 0, 0.2]); % Connect data points with a line
-    end
-end
+% Define colors repeating in pairs: [blue, green, blue, green, ...]
+colors = repmat([0.12 0.29 0.36; 0.24 0.41 0.12], factor2N, 1);
 
-hold off;
-xtickLabels = {{'sureBetter & nF', 'sureBetter & F', 'riskyBetter & nF', 'riskyBetter & F'}, {'p=10 & nF', 'p=10 & F', 'p=50 & nF', 'p=50 & F', 'p=90 & nF', 'p=90 & F'}};
+% Plot violins with paired connections
+violinPlot(data, colors, true);
+
+% X-axis labels
+xtickLabels = {
+    {'sureBetter & nF', 'sureBetter & F', 'riskyBetter & nF', 'riskyBetter & F'}, ...
+    {'p=10 & nF', 'p=10 & F', 'p=50 & nF', 'p=50 & F', 'p=90 & nF', 'p=90 & F'}
+};
 xtickLabel = xtickLabels{factor2};
 set(gca, 'XTick', 1:2*factor2N, 'XTickLabels', xtickLabel);
-ylabel(regexp(dependentS, '([^_]+)', 'match', 'once')+"-rate");
+ylabel(regexp(dependentS, '([^_]+)', 'match', 'once') + "-rate");
 
-expS = sprintf("Exp %s",strrep(num2str(experiment), '  ', ', '));
-meansS = ['[', strjoin(arrayfun(@(x) sprintf('%.2f', x),  mean(data), 'UniformOutput', false), ', '), ']'];
-title(sprintf('Boxplot with connected data points of individuals\n%s\nmeans: %s\nnF=no-feedback, F=feedback', expS, meansS)) ;
+expS = sprintf("Exp %s", strrep(num2str(experiment), '  ', ', '));
+meansS = ['[', strjoin(arrayfun(@(x) sprintf('%.2f', x), mean(data), 'UniformOutput', false), ', '), ']'];
+title(sprintf('Violin plot with connected data points of individuals\n%s\nmeans: %s\nnF=no-feedback, F=feedback', expS, meansS));
+ylim([0 1]);
+box on
 % ---
 
 
