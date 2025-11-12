@@ -14,8 +14,8 @@ This repository provides open access to the dataset and analysis scripts accompa
 
 ## Code
 
-- **`Nasioulas2024_basicFigures.m`** — MATLAB script for reproducing the main figures presented in the manuscript.  
-  Running this script will generate the basic plots directly from the provided dataset.
+- **`generate_figures_main.m`** — MATLAB script for reproducing the figures presented in the manuscript (main text and supplementary materials).  
+  
 
 ### Script customization
 The script includes several user-editable parameters that allow you to:
