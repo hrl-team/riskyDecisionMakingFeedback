@@ -6,8 +6,9 @@ This repository provides open access to the dataset and analysis scripts accompa
 
 ## Data
 
-- **`Nasioulas2024_data.csv`** — dataset used in the study.  
+- **`Nasioulas2024_data.csv`** — newly collected experiments 1-7 used in the study.  
 - **`Nasioulas2024_data_readMe.txt`** — detailed description of all columns in the data matrix.
+-  **`Erev2017_data.csv`** — data reproduced from Erev et al. 2017
 
 ---
 
