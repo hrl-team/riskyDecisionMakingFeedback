@@ -6,7 +6,7 @@ This repository provides open access to the dataset and analysis scripts accompa
 
 ## Data
 
-- **`Nasioulas2024_data.csv`** — newly collected experiments 1-7 used in the study.  
+- **`Nasioulas2024_data.csv`** — raw data from the newly collected experiments (Experiments 1-7) used in the study.  
 - **`Erev2017_data.csv`** — data reproduced from Erev et al. (2017); original dataset is publicly available on Zenodo [here](https://zenodo.org/records/321652).
 - **`Nasioulas2024_data_readMe.txt`** — detailed description of all columns in the data matrix.
 
