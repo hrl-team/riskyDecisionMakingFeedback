@@ -7,23 +7,16 @@ This repository provides open access to the dataset and analysis scripts accompa
 ## Data
 
 - **`Nasioulas2024_data.csv`** — newly collected experiments 1-7 used in the study.  
+- **`Erev2017_data.csv`** — data reproduced from Erev et al. (2017); original dataset is publicly available on Zenodo [here](https://zenodo.org/records/321652).
 - **`Nasioulas2024_data_readMe.txt`** — detailed description of all columns in the data matrix.
--  **`Erev2017_data.csv`** — data reproduced from Erev et al. 2017
+
 
 ---
 
 ## Code
 
-- **`generate_figures_main.m`** — MATLAB script for reproducing the figures presented in the manuscript (main text and supplementary materials).  
-  
-
-### Script customization
-The script includes several user-editable parameters that allow you to:
-- Select **different dependent variables** to plot,  
-- Select **different experimental factors/conditions**,  
-- Include **specific experiments**.
-
-These options are clearly commented within the code to facilitate easy modification and reproducibility.
+- **`generate_figures_main.m`** — MATLAB script for reproducing the figures presented in the manuscript (main text and supplementary materials).
+- **`generate_glmm_main.R`** — R script for reproducing the logistic regression analyses presented in the manuscript (main text and supplementary materials).  
 
 ---
 
