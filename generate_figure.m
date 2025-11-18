@@ -13,9 +13,9 @@ function generate_figure(figID, dataFile)
 
     % Determine dataset type automatically
     if contains(dataFile, 'Erev', 'IgnoreCase', true)
-        pRiskyVar = 'pRiskyCat';
+        pRiskyVar = 'P_RISKY_CAT';
     else
-        pRiskyVar = 'pRisky';
+        pRiskyVar = 'P_RISKY';
     end
 
     switch upper(strtrim(figID))
@@ -159,7 +159,7 @@ function fig_feedback_factor2_violin(behData, experiment, dependentS, factor2S, 
 
     if ismember(factor2S, {'RISKYBETTER','PREVIOUS_RISKY_CHOICE','PREVIOUS_OUT_POS', 'VALENCE'})
         factor2N = 2;
-    elseif ismember(factor2S, {'pRisky','pRiskyCat'})
+    elseif ismember(factor2S, {'P_RISKY','P_RISKY_CAT'})
         factor2N = 3;
     else
         error('Unsupported factor2: %s', factor2S);
@@ -185,16 +185,22 @@ function fig_feedback_factor2_violin(behData, experiment, dependentS, factor2S, 
     switch factor2S
         case 'RISKYBETTER'
             xtickLabel = {'sureBetter & nF','sureBetter & F','riskyBetter & nF','riskyBetter & F'};
-        case {'pRisky','pRiskyCat'}
-            if strcmp(factor2S, 'pRisky')
+        case {'P_RISKY','P_RISKY_CAT'}
+            if strcmp(factor2S, 'P_RISKY')
                 xtickLabel = {'p=10 & nF','p=10 & F','p=50 & nF','p=50 & F','p=90 & nF','p=90 & F'};
             else
-                xtickLabel = {'low & nF','low & F','medium & nF','medium & F','high & nF','high & F'};
+                xtickLabel = {'lowPr & nF','lowPr & F','mediumPr & nF','mediumPr & F','highPr & nF','highPr & F'};
             end
-        case 'PREVIOUS_RISKY_CHOICE'
-            xtickLabel = {'prev Safe & nF','prev Safe & F','prev Risky & nF','prev Risky & F'};
+        case 'PREVIOUS_RISKY_CHOICE'            
+            xtickLabel = {'prev Safe & nF','prev Safe & F','prev Risky & nF','prev Risky & F'};            
+            if isequal(figID,'Figure5A')
+                xtickLabel = strrep(xtickLabel,'prev ','Choice_{t=1}=');
+            end
         case 'PREVIOUS_OUT_POS'
-            xtickLabel = {'prev 0 & nF','prev 0 & F','prev >0 & nF','prev >0 & F'};
+            xtickLabel = {'prev =0 & nF','prev =0 & F','prev >0 & nF','prev >0 & F'};
+            if isequal(figID,'Figure5B')
+                xtickLabel = strrep(xtickLabel,'prev ','Out_{t=1}');
+            end
         case 'VALENCE'
             xtickLabel = {'negative & nF','negative & F','positive & nF','positive & F'};
     end
@@ -203,8 +209,12 @@ function fig_feedback_factor2_violin(behData, experiment, dependentS, factor2S, 
     colors = repmat([0.12 0.29 0.36; 0.24 0.41 0.12], factor2N, 1);
     violinPlot(data, colors, true);
 
+    ylabelSuffix = "-rate";
+    if ismember(figID, {'Figure5A','Figure5B'})
+        ylabelSuffix = ylabelSuffix+ "(t=2)";      
+    end
     set(gca,'XTick',1:2*factor2N,'XTickLabels',xtickLabel);
-    ylabel(regexprep(dependentS,'_.*$','') + "-rate");
+    ylabel(regexprep(dependentS,'_.*$','') + ylabelSuffix);
     expS = sprintf('Exp %s', strrep(num2str(experiment), '  ', ', '));
     title(sprintf('%s', expS));
     ylim([0 1]); box on;
@@ -276,14 +286,22 @@ end
 
 function fig_prevRisky_pRisky_violin(behData, experiment, dependentS, pRiskyVar, figID)
     if nargin < 4
-        pRiskyVar = 'pRisky';
+        pRiskyVar = 'P_RISKY';
     end
     idx = ismember(behData.EXP, experiment) & behData.FEEDBACK == 1 & ~isnan(behData.(dependentS));
+    if experiment == 8 & strcmp(dependentS, 'REPEAT_RISKY')%Erev & repeatRisky
+        %because each block starts with the no-feedback trials and
+        %continues with the feedbback trials, we have to exclude the first 
+        %feedback trial, namely TRIAL=6, because REPEAT_RISKY is not NaN
+        %here
+        idx = idx & behData.TRIAL ~= 6;
+    end
+
     T = behData(idx, :);
     if isempty(T)
         error('No valid rows found for %s (check FEEDBACK==1 and non-NaN data).', dependentS);
     end
-    factorA = 'PREVIOUS_RISKY_OUT_POS';
+    factorA = 'PREVIOUS_RISKY_OUT_MAX';
     factorB = pRiskyVar;
     levelsA = unique(T.(factorA));
     levelsB = unique(T.(factorB));
@@ -304,10 +322,10 @@ function fig_prevRisky_pRisky_violin(behData, experiment, dependentS, pRiskyVar,
         tmp = reshape(padarray(vals, pad, NaN, 'post'), [], nCols);
         data = tmp(~any(isnan(tmp), 2), :);
     end
-    if strcmpi(pRiskyVar, 'P1')
-        xtickLabel = {'p=10 prev0','p=10 prev>0','p=50 prev0','p=50 prev>0','p=90 prev0','p=90 prev>0'};
+    if strcmpi(pRiskyVar, 'P_RISKY')
+        xtickLabel = {'p=10 / prev-Min','p=10 / prev-Max','p=50 / prev-Min','p=50 / prev-Max','p=90 / prev-Min','p=90 / prev-Max'};
     else
-        xtickLabel = {'low prev0','low prev>0','medium prev0','medium prev>0','high prev0','high prev>0'};
+        xtickLabel = {'lowPr / prev-Min','lowPr / prev-Max','mediumPr / prev-Min','mediumPr / prev-Max','highPr / prev-Min','highPr / prev-Max'};
     end
     colorA = [0.8500 0.3250 0.0980];
     colorB = [0.9290 0.6940 0.1250];

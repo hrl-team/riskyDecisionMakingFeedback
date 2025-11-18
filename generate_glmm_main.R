@@ -16,22 +16,25 @@ source(file.path(script_dir, "generate_glmm_utils.R"))
 # -------------------- USER SETTINGS -----------------------
 # List of configurations to run (each element is a list)
 configs <- list(
-  # list(exp = 1, dependentVariable = "risky-rate", model_number = 1),
-  # list(exp = 2, dependentVariable = "risky-rate", model_number = 2),
-  # list(exp = 3, dependentVariable = "risky-rate", model_number = 1),
-  # list(exp = 4, dependentVariable = "optimal-rate", model_number = 1),
-  # list(exp = 5, dependentVariable = "optimal-rate", model_number = 2),
-  # list(exp = c(1, 2, 3, 4, 5, 6), dependentVariable = "optimal-rate", model_number = 2),
-  # list(exp = 7, dependentVariable = "risky-rate", model_number = 3),
-  # list(exp = c(1, 2, 3, 4, 5, 6), dependentVariable = "risky-rate", model_number = 1),
-  # list(exp = 7, dependentVariable = "risky-rate", model_number = 1),
-  # 
-  # list(exp = 8, dependentVariable = "risky-rate", model_number = 1), #Exp8 = Erev
-  # 
-  # list(exp = 8, dependentVariable = "optimal-rate", model_number = 2), #Exp8 = Erev
+  list(exp = 1, dependentVariable = "RISKY_CHOICE", model_number = 1),
+  list(exp = 2, dependentVariable = "RISKY_CHOICE", model_number = 2),
+  list(exp = 3, dependentVariable = "RISKY_CHOICE", model_number = 1),
+  list(exp = 4, dependentVariable = "OPTIMAL_CHOICE", model_number = 1),
+  list(exp = 5, dependentVariable = "OPTIMAL_CHOICE", model_number = 2),
+  list(exp = c(1, 2, 3, 4, 5, 6), dependentVariable = "OPTIMAL_CHOICE", model_number = 1),
+  list(exp = c(1, 2, 3, 4, 5, 6), dependentVariable = "OPTIMAL_CHOICE", model_number = 2),
+  list(exp = 7, dependentVariable = "RISKY_CHOICE", model_number = 3),
+  list(exp = c(1, 2, 3, 4, 5, 6), dependentVariable = "RISKY_CHOICE", model_number = 1),
+  list(exp = 7, dependentVariable = "RISKY_CHOICE", model_number = 1),
+  
+  list(exp = 8, dependentVariable = "RISKY_CHOICE", model_number = 1), #Exp8 = Erev
 
-  list(exp = 4, dependentVariable = "repeatRisky", model_number = 2),
-  list(exp = 8, dependentVariable = "repeatRisky", model_number = 1)
+  list(exp = 8, dependentVariable = "OPTIMAL_CHOICE", model_number = 2), #Exp8 = Erev
+
+  list(exp = c(1, 2, 3, 4, 5, 6), dependentVariable = "REPEAT_RISKY", model_number = 2),
+  list(exp = 4, dependentVariable = "REPEAT_RISKY", model_number = 2),
+  list(exp = 8, dependentVariable = "REPEAT_RISKY", model_number = 1),
+  list(exp = 8, dependentVariable = "REPEAT_RISKY", model_number = 2)
 )
 # =========================================================
 
@@ -59,44 +62,32 @@ for (cfg in configs) {
   # --- Define formula dynamically ---
   formula <- switch(paste0(dependentVariable, "_", model_number),
                     
-                    "risky-rate_1" = choiceRisky ~ 1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY +
+                    "RISKY_CHOICE_1" = RISKY_CHOICE ~ 1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY +
                       (1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY | SUBJ),
                     
-                    "risky-rate_2" = choiceRisky ~ 1 + FEEDBACK * P_RISKY + TRIAL + RISKYBETTER + MAG_RISKY +
+                    "RISKY_CHOICE_2" = RISKY_CHOICE ~ 1 + FEEDBACK * P_RISKY + TRIAL + RISKYBETTER + MAG_RISKY +
                       (1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY | SUBJ),
                     
-                    "risky-rate_3" = choiceRisky ~ 1 + FEEDBACK * RISKYBETTER + P_RISKY + TRIAL  + MAG_RISKY +
+                    "RISKY_CHOICE_3" = RISKY_CHOICE ~ 1 + FEEDBACK * RISKYBETTER + P_RISKY + TRIAL  + MAG_RISKY +
                       (1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY | SUBJ),
                     
-                    "optimal-rate_1" = choiceCorrect ~ 1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY +
+                    "OPTIMAL_CHOICE_1" = OPTIMAL_CHOICE ~ 1 + FEEDBACK + TRIAL + RISKYBETTER + P_RISKY + MAG_RISKY +
                       (1 + FEEDBACK + RISKYBETTER + P_RISKY + MAG_RISKY | SUBJ),
                     
-                    "optimal-rate_2" = choiceCorrect ~ 1 + FEEDBACK * RISKYBETTER + TRIAL + P_RISKY + MAG_RISKY +
+                    "OPTIMAL_CHOICE_2" = OPTIMAL_CHOICE ~ 1 + FEEDBACK * RISKYBETTER + TRIAL + P_RISKY + MAG_RISKY +
                       (1 + FEEDBACK + RISKYBETTER + P_RISKY + MAG_RISKY | SUBJ),
                     
-                    "repeatRisky_1" = repeatRisky ~ 1 + PREVIOUS_RISKY_OUT_POS + P_RISKY +
-                      (1 + PREVIOUS_RISKY_OUT_POS + P_RISKY | SUBJ),
+                    "REPEAT_RISKY_1" = REPEAT_RISKY ~ 1 + PREVIOUS_RISKY_OUT_MAX + P_RISKY +
+                      (1 + PREVIOUS_RISKY_OUT_MAX + P_RISKY | SUBJ),
                     
-                    "repeatRisky_2" = repeatRisky ~ 1 + PREVIOUS_RISKY_OUT_POS * P_RISKY +
-                      (1 + PREVIOUS_RISKY_OUT_POS + P_RISKY | SUBJ),
+                    "REPEAT_RISKY_2" = REPEAT_RISKY ~ 1 + PREVIOUS_RISKY_OUT_MAX * P_RISKY +
+                      (1 + PREVIOUS_RISKY_OUT_MAX + P_RISKY | SUBJ),
                     
                     stop("Invalid dependent variable or model number")
   )
   
   # --- Preprocess data & formulas ---
   myData$SUBJ <- as.numeric(factor(myData$EXPID))
-  myData <- myData %>%
-    rename(
-      choiceRisky   = RISKY_CHOICE,
-      choiceCorrect = OPTIMAL_CHOICE,
-      repeatRisky   = REPEAT_RISKY, 
-      P_RISKY       = pRisky
-    )
-  # --- Conditionally rename MAG_RISKY only if it exists ---
-  if (!erev && "magRisky" %in% names(myData)) {
-    myData <- myData %>%
-      rename(MAG_RISKY = magRisky)
-  }
   
   
   if (any(exp %in% 1:6)) {
@@ -132,6 +123,7 @@ for (cfg in configs) {
   if (any(myData$P_RISKY > 1)) {
     myData$P_RISKY <- myData$P_RISKY / 100
   }
+  
   #low: prob≤0.25, medium: 0.25<prob<.075, high: prob≥0.75
   myData$P_RISKY <- cut(
     myData$P_RISKY,
@@ -142,9 +134,9 @@ for (cfg in configs) {
   myData$P_RISKY <- as.numeric(as.character(myData$P_RISKY))
   
   
-  # --- If analyzing "repeatRisky", keep only feedback trials ---
-  if (dependentVariable == "repeatRisky") {
-    myData <- subset(myData, FEEDBACK == 1 & !is.na(repeatRisky))
+  # --- If analyzing "REPEAT_RISKY", keep only feedback trials ---
+  if (dependentVariable == "REPEAT_RISKY") {
+    myData <- subset(myData, FEEDBACK == 1 & !is.na(REPEAT_RISKY))
   }
   
   
