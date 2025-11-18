@@ -18,16 +18,7 @@ This repository provides open access to the dataset and analysis scripts accompa
 - **`generate_figures_main.m`** — MATLAB script for reproducing the figures presented in the manuscript (main text and supplementary materials).
 - **`generate_glmm_main.R`** — R script for reproducing the logistic regression analyses presented in the manuscript (main text and supplementary materials).  
 
----
 
-## Example Figures
-
-<p align="center">
-  <img src="https://github.com/anasioulas/riskyDecisionMakingFeedback/blob/344255c30e1c4aa7514e5db4dfd358100227207e/Figure1__example1.jpg" alt="Example Figure 1" height="350">
-  <img src="https://github.com/anasioulas/riskyDecisionMakingFeedback/blob/41f828bd67f8b81ac016e539dd4d162d705fe888/Figure2__example1.jpg" alt="Example Figure 3" height="350">
-  <img src="https://github.com/anasioulas/riskyDecisionMakingFeedback/blob/41f828bd67f8b81ac016e539dd4d162d705fe888/Figure2__example2.jpg" alt="Example Figure 2A" height="350">
-  <img src="https://github.com/anasioulas/riskyDecisionMakingFeedback/blob/41f828bd67f8b81ac016e539dd4d162d705fe888/Figure3__example1.jpg" alt="Example Figure 2B" height="350">
-</p>
 
 ---
 
